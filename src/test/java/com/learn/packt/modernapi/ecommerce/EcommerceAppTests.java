@@ -1,10 +1,10 @@
-package com.learn.packt.modernapi.modernapi;
+package com.learn.packt.modernapi.ecommerce;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class ModernapiApplicationTests {
+class EcommerceAppTests {
 
 	@Test
 	void contextLoads() {
