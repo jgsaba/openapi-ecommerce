@@ -18,7 +18,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Getter
-@Setter
 @Entity
 @Table(name = "item")
 public class ItemEntity {
@@ -43,4 +42,34 @@ public class ItemEntity {
 
   @ManyToMany(mappedBy = "items", fetch = FetchType.LAZY)
   private List<OrderEntity> orders;
+
+  public ItemEntity setId(UUID id) {
+    this.id = id;
+    return this;
+  }
+
+  public ItemEntity setProduct(ProductEntity product) {
+    this.product = product;
+    return this;
+  }
+
+  public ItemEntity setPrice(BigDecimal price) {
+    this.price = price;
+    return this;
+  }
+
+  public ItemEntity setQuantity(int quantity) {
+    this.quantity = quantity;
+    return this;
+  }
+
+  public ItemEntity setCart(List<CartEntity> cart) {
+    this.cart = cart;
+    return this;
+  }
+
+  public ItemEntity setOrders(List<OrderEntity> orders) {
+    this.orders = orders;
+    return this;
+  }
 }

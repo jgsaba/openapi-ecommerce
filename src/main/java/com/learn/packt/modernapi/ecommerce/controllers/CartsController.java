@@ -6,10 +6,12 @@ import com.learn.packt.modernapi.api.model.Item;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.context.request.NativeWebRequest;
 
 import javax.validation.Valid;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @RestController
@@ -37,17 +39,22 @@ public class CartsController implements CartApi {
     }
 
     @Override
-    public ResponseEntity<List<Cart>> getCartByCustomerId(String customerId) {
-        throw new RuntimeException("Manual exception thrown");
+    public Optional<NativeWebRequest> getRequest() {
+        return CartApi.super.getRequest();
+    }
+
+    @Override
+    public ResponseEntity<Cart> getCartByCustomerId(String customerId) {
+        return CartApi.super.getCartByCustomerId(customerId);
     }
 
     @Override
     public ResponseEntity<List<Item>> getCartItemsByCustomerId(String customerId) {
-        return null;
+        return CartApi.super.getCartItemsByCustomerId(customerId);
     }
 
     @Override
-    public ResponseEntity<List<Item>> getCartItemsByItemId(String customerId, String itemId) {
-        return null;
+    public ResponseEntity<Item> getCartItemsByItemId(String customerId, String itemId) {
+        return CartApi.super.getCartItemsByItemId(customerId, itemId);
     }
 }

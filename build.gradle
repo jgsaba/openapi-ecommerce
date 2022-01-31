@@ -35,8 +35,8 @@ dependencies {
 }
 
 swaggerSources {
-	def typeMappings = 'URI=URI'
-	def importMappings = 'URI=java.net.URI'
+	def typeMappings = 'URI=URI, BigDecimal=BigDecimal, EntityModel=EntityModel'
+	def importMappings = 'URI=java.net.URI, BigDecimal=java.math.BigDecimal, EntityModel=org.springframework.hateoas.EntityModel'
 	modernapi {
 		def apiYaml = "${rootDir}/src/main/resources/api/apispec.yaml"
 		def configJson = "${rootDir}/src/main/resources/api/config.json"
@@ -48,7 +48,6 @@ swaggerSources {
 			rawOptions = ['--ignore-file-override', ignoreFile, '--type-mappings',
 						  typeMappings, '--import-mappings', importMappings] as List<String>
 			components = [models: true, apis: true, supportingFiles: 'ApiUtil.java']
-			dependsOn validation
 		}
 	}
 }

@@ -13,7 +13,6 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 @Getter
-@Setter
 @Entity
 @Table(name = "order_item")
 public class OrderItemEntity {
@@ -28,4 +27,19 @@ public class OrderItemEntity {
 
   @Column(name = "item_id")
   private UUID itemId;
+
+  public OrderItemEntity setId(UUID id) {
+    this.id = id;
+    return this;
+  }
+
+  public OrderItemEntity setOrderId(UUID orderId) {
+    this.orderId = orderId;
+    return this;
+  }
+
+  public OrderItemEntity setItemId(UUID itemId) {
+    this.itemId = itemId;
+    return this;
+  }
 }

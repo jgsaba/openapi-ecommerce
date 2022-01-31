@@ -21,7 +21,6 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 @Getter
-@Setter
 @Entity
 @Table(name = "product")
 public class ProductEntity {
@@ -58,4 +57,44 @@ public class ProductEntity {
 
   @OneToMany(mappedBy = "product")
   private List<ItemEntity> items;
+
+  public ProductEntity setId(UUID id) {
+    this.id = id;
+    return this;
+  }
+
+  public ProductEntity setName(String name) {
+    this.name = name;
+    return this;
+  }
+
+  public ProductEntity setDescription(String description) {
+    this.description = description;
+    return this;
+  }
+
+  public ProductEntity setPrice(BigDecimal price) {
+    this.price = price;
+    return this;
+  }
+
+  public ProductEntity setCount(int count) {
+    this.count = count;
+    return this;
+  }
+
+  public ProductEntity setImageUrl(String imageUrl) {
+    this.imageUrl = imageUrl;
+    return this;
+  }
+
+  public ProductEntity setTags(List<TagEntity> tags) {
+    this.tags = tags;
+    return this;
+  }
+
+  public ProductEntity setItems(List<ItemEntity> items) {
+    this.items = items;
+    return this;
+  }
 }
