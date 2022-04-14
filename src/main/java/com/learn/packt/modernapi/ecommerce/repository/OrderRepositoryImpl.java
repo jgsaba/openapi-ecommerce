@@ -56,8 +56,7 @@ public class OrderRepositoryImpl implements OrderRepositoryExt {
         Iterable<ItemEntity> dbItems = itemRepo.findByCustomerId(m.getCustomerId());
         List<ItemEntity> items = StreamSupport.stream(dbItems.spliterator(), false).collect(toList());
         if (items.size() < 1) {
-            throw new ResourceNotFoundException(String
-                    .format("There is no item found in customer's (ID: %s) cart.", m.getCustomerId()));
+            throw new ResourceNotFoundException(String.format("There is no item found in customer's (ID: %s) cart.", m.getCustomerId()));
         }
         BigDecimal total = BigDecimal.ZERO;
         for (ItemEntity i : items) {
