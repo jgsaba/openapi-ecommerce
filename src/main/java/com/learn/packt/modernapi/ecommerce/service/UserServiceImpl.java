@@ -4,6 +4,8 @@ import com.learn.packt.modernapi.ecommerce.entity.AddressEntity;
 import com.learn.packt.modernapi.ecommerce.entity.CardEntity;
 import com.learn.packt.modernapi.ecommerce.entity.UserEntity;
 import com.learn.packt.modernapi.ecommerce.repository.UserRepository;
+
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import org.springframework.stereotype.Service;
@@ -34,8 +36,8 @@ public class UserServiceImpl implements UserService {
   }
 
   @Override
-  public Optional<CardEntity> getCardByCustomerId(String id) {
-    return Optional.of(repository.findById(UUID.fromString(id)).map(UserEntity::getCards).get().get(0));
+  public Iterable<CardEntity> getCardByCustomerId(String id) {
+    return repository.findById(UUID.fromString(id)).map(UserEntity::getCards).get();
   }
 
   @Override

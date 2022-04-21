@@ -1,60 +1,72 @@
 package com.learn.packt.modernapi.ecommerce.controllers;
 
+import static org.springframework.http.ResponseEntity.accepted;
+import static org.springframework.http.ResponseEntity.ok;
+
 import com.learn.packt.modernapi.api.CartApi;
+import com.learn.packt.modernapi.ecommerce.hateoas.CartRepresentationModelAssembler;
 import com.learn.packt.modernapi.api.model.Cart;
 import com.learn.packt.modernapi.api.model.Item;
-import lombok.extern.slf4j.Slf4j;
+import com.learn.packt.modernapi.ecommerce.service.CartService;
+import java.util.List;
+import javax.validation.Valid;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.context.request.NativeWebRequest;
 
-import javax.validation.Valid;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
-
-@Slf4j
+/**
+ * @author : github.com/sharmasourabh
+ * @project : Chapter04 - Modern API Development with Spring and Spring Boot
+ **/
 @RestController
 public class CartsController implements CartApi {
 
-    @Override
-    public ResponseEntity<List<Item>> addCartItemsByCustomerId(String customerId, @Valid Item item) {
-        log.info("Request for customer ID: {}\nItem: {}", customerId, item);
-        return ResponseEntity.ok(Collections.emptyList());
-    }
+  private static final Logger log = LoggerFactory.getLogger(CartsController.class);
+  private CartService service;
+  private final CartRepresentationModelAssembler assembler;
 
-    @Override
-    public ResponseEntity<List<Item>> addOrReplaceItemsByCustomerId(String customerId, Item item) {
-        return null;
-    }
+  public CartsController(CartService service, CartRepresentationModelAssembler assembler) {
+    this.service = service;
+    this.assembler = assembler;
+  }
 
-    @Override
-    public ResponseEntity<Void> deleteCart(String customerId) {
-        return null;
-    }
+  @Override
+  public ResponseEntity<List<Item>> addCartItemsByCustomerId(String customerId, @Valid Item item) {
+    log.info("Request for customer ID: {}\nItem: {}", customerId, item);
+    return ok(service.addCartItemsByCustomerId(customerId, item));
+  }
 
-    @Override
-    public ResponseEntity<Void> deleteItemFromCart(String customerId, String itemId) {
-        return null;
-    }
+  @Override
+  public ResponseEntity<List<Item>> addOrReplaceItemsByCustomerId(String customerId,
+      @Valid Item item) {
+    return ok(service.addOrReplaceItemsByCustomerId(customerId, item));
+  }
 
-    @Override
-    public Optional<NativeWebRequest> getRequest() {
-        return CartApi.super.getRequest();
-    }
+  @Override
+  public ResponseEntity<Void> deleteCart(String customerId) {
+    service.deleteCart(customerId);
+    return accepted().build();
+  }
 
-    @Override
-    public ResponseEntity<Cart> getCartByCustomerId(String customerId) {
-        return CartApi.super.getCartByCustomerId(customerId);
-    }
+  @Override
+  public ResponseEntity<Void> deleteItemFromCart(String customerId, String itemId) {
+    service.deleteItemFromCart(customerId, itemId);
+    return accepted().build();
+  }
 
-    @Override
-    public ResponseEntity<List<Item>> getCartItemsByCustomerId(String customerId) {
-        return CartApi.super.getCartItemsByCustomerId(customerId);
-    }
+  @Override
+  public ResponseEntity<Cart> getCartByCustomerId(String customerId) {
+    return ok(assembler.toModel(service.getCartByCustomerId(customerId)));
+  }
 
-    @Override
-    public ResponseEntity<Item> getCartItemsByItemId(String customerId, String itemId) {
-        return CartApi.super.getCartItemsByItemId(customerId, itemId);
-    }
+  @Override
+  public ResponseEntity<List<Item>> getCartItemsByCustomerId(String customerId) {
+    return ok(service.getCartItemsByCustomerId(customerId));
+  }
+
+  @Override
+  public ResponseEntity<Item> getCartItemsByItemId(String customerId, String itemId) {
+    return ok(service.getCartItemsByItemId(customerId, itemId));
+  }
 }

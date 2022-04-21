@@ -366,7 +366,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Card'
+                type: array
+                items:
+                  $ref: '#/components/schemas/Card'
   /api/v1/customers/{id}/addresses:
     get:
       tags:
@@ -387,7 +389,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Address'
+                type: array
+                items:
+                  $ref: '#/components/schemas/Address'
   /api/v1/addresses:
     get:
       tags:
